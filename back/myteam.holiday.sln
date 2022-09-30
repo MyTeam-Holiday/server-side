@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myteam.holiday", "myteam.holiday.csproj", "{AFF11AA8-2487-4469-BF73-7C26E1388B67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myteam.holiday.WebServer", "myteam.holiday.WebServer\myteam.holiday.WebServer.csproj", "{9CF7F5B1-CD72-4CAD-91F7-CB20FA270533}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myteam.holiday.WebApi", "myteam.holiday.WebApi\myteam.holiday.WebApi.csproj", "{6989F738-9114-406E-BBD6-487A9C48928B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AFF11AA8-2487-4469-BF73-7C26E1388B67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFF11AA8-2487-4469-BF73-7C26E1388B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFF11AA8-2487-4469-BF73-7C26E1388B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFF11AA8-2487-4469-BF73-7C26E1388B67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF7F5B1-CD72-4CAD-91F7-CB20FA270533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF7F5B1-CD72-4CAD-91F7-CB20FA270533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF7F5B1-CD72-4CAD-91F7-CB20FA270533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF7F5B1-CD72-4CAD-91F7-CB20FA270533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6989F738-9114-406E-BBD6-487A9C48928B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6989F738-9114-406E-BBD6-487A9C48928B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6989F738-9114-406E-BBD6-487A9C48928B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6989F738-9114-406E-BBD6-487A9C48928B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,11 +5,32 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/back/myteam.holiday.WebApi/bin/Debug/net6.0/myteam.holiday.WebApi.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+https?://localhost:([0-9]+)",
+                "uriFormat": "http://localhost:%s/swagger"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/back/bin/Debug/net6.0/myteam.holiday.dll",
+            "program": "${workspaceFolder}/back/myteam.holiday.WebApi/bin/Debug/net6.0/myteam.holiday.WebApi.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,

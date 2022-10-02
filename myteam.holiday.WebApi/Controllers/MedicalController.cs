@@ -1,0 +1,48 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using myteam.holiday.Domain.Models;
+using myteam.holiday.EntityFramework.Services;
+
+namespace myteam.holiday.WebApi.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class MedicalController : Controller
+    {
+        private readonly GenericAppDbService<Medical> _appDbService;
+        private readonly ILogger<CelebrationController> _logger;
+        public MedicalController(GenericAppDbService<Medical> appDbService, ILogger<CelebrationController> logger)
+        {
+            _appDbService = appDbService;
+            _logger = logger;
+        }
+        [HttpGet("GetAllMedicals")]
+        public async Task<ActionResult<IEnumerable<Medical>>> GetAllMedicals()
+        {
+            return Ok(await _appDbService.GetAllValues());
+        }
+
+        [HttpGet("GetMedical")]
+        public async Task<ActionResult<Medical>> GetMedical(int medicalId)
+        {
+            return Ok(await _appDbService.GetValue(medicalId));
+        }
+
+        [HttpPost("CreateMedical")]
+        public async Task<ActionResult<Medical>> CreateCelebration(Medical medical)
+        {
+            return Ok(await _appDbService.Create(medical));
+        }
+
+        [HttpPost("UpdateMedical")]
+        public async Task<ActionResult<Medical>> UpdateMedical(int id, Medical updatedMedical)
+        {
+            return Ok(await _appDbService.Update(id, updatedMedical));
+        }
+
+        [HttpDelete("DeleteMedical")]
+        public async Task<ActionResult<bool>> DeleteMedical(int id)
+        {
+            return Ok(await _appDbService.Delete(id));
+        }
+    }
+}

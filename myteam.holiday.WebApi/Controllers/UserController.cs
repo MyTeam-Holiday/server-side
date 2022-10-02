@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using myteam.holiday.WebServer.Model;
+using myteam.holiday.Domain.Models;
+using myteam.holiday.EntityFramework.Services;
 using myteam.holiday.WebServer.Services;
 
 namespace myteam.holiday.WebApi.Controllers
@@ -8,46 +9,45 @@ namespace myteam.holiday.WebApi.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly AppDbUserService _userService;
+        private readonly GenericAppDbService<User> _appDbService;
         private readonly ILogger<UserController> _logger;
 
         public UserController(
             ILogger<UserController> logger,
-            AppDbUserService userService)
+            GenericAppDbService<User> appDbService)
         {
             _logger = logger;
-            _userService = userService;
+            _appDbService = appDbService;
         }
 
-        [HttpGet("GetAllUser")]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
+        [HttpGet("GetAllUsers")]
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
-            return Ok(await _userService.GetAllAsync());
+            return Ok(await _appDbService.GetAllValues());
         }
 
         [HttpGet("GetUser")]
         public async Task<ActionResult<User>> GetUser(int userId)
         {
-            return Ok(await _userService.GetOneAsync(userId));
+            return Ok(await _appDbService.GetValue(userId));
         }
 
         [HttpPost("CreateUser")]
-        public async Task<ActionResult<int>> CreateUser(User user)
+        public async Task<ActionResult<User>> CreateUser(User user)
         {
-            return Ok(await _userService.CreateUserAsync(user));
+            return Ok(await _appDbService.Create(user));
         }
 
         [HttpPost("UpdateUser")]
-        public async Task<ActionResult<int>> UpdateUser(int oldId, User newUser)
+        public async Task<ActionResult<int>> UpdateUser(int id, User updatedUser)
         {
-            return Ok(await _userService.UpdateUserAsync(oldId, newUser));
+            return Ok(await _appDbService.Update(id, updatedUser));
         }
 
         [HttpDelete("DeleteUser")]
-        public async Task<ActionResult<int>> DeleteUser(int id)
+        public async Task<ActionResult<bool>> DeleteUser(int id)
         {
-            User user = await _userService.GetOneAsync(id) ?? new();
-            return Ok(await _userService.DeleteUserAsync(user));
+            return Ok(await _appDbService.Delete(id));
         }
     }
 }

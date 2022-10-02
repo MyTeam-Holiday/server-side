@@ -1,0 +1,54 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using myteam.holiday.Domain.Models;
+using myteam.holiday.EntityFramework.Data;
+using myteam.holiday.EntityFramework.Services;
+using myteam.holiday.WebServer.Services;
+
+namespace myteam.holiday.WebApi.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class TeamController : ControllerBase
+    {
+        private readonly GenericAppDbService<Team> _appDbService;
+        private readonly ILogger<TeamController> _logger;
+
+        public TeamController(
+            ILogger<TeamController> logger,
+            GenericAppDbService<Team> appDbService)
+        {
+            _logger = logger;
+            _appDbService = appDbService;
+        }
+
+        [HttpGet("GetAllTeams")]
+        public async Task<ActionResult<IEnumerable<Team>>> GetAllTeams()
+        {
+            return Ok(await _appDbService.GetAllValues());
+        }
+
+        [HttpGet("GetTeam")]
+        public async Task<ActionResult<Team>> GetTeam(int teamId)
+        {
+            return Ok(await _appDbService.GetValue(teamId));
+        }
+
+        [HttpPost("CreateTeam")]
+        public async Task<ActionResult<Team>> CreateTeam(Team team)
+        {
+            return Ok(await _appDbService.Create(team));
+        }
+
+        [HttpPost("UpdateTeam")]
+        public async Task<ActionResult<Team>> UpdateTeam(int id, Team updatedTeam)
+        {
+            return Ok(await _appDbService.Update(id, updatedTeam));
+        }
+
+        [HttpDelete("DeleteTeam")]
+        public async Task<ActionResult<bool>> DeleteTeam(int id)
+        {
+            return Ok(await _appDbService.Delete(id));
+        }
+    }
+}

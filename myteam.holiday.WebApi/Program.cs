@@ -13,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<AppDbWeatherForecastService>();
+builder.Services.AddTransient<AppDbUserService>();
+builder.Services.AddTransient<AppDbGroupService>();
 
 var app = builder.Build();
 

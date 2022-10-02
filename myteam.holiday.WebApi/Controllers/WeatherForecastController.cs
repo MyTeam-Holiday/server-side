@@ -20,7 +20,7 @@ namespace myteam.holiday.WebApi.Controllers
         }
 
         [HttpGet("GetWeatherForecast")]
-        public async Task<ActionResult<WeatherForecast>> GetAsync()
+        public async Task<ActionResult<IEnumerable<WeatherForecast>>> GetAsync()
         {
             return Ok(await _forecastService.GetAllAsync());
         }

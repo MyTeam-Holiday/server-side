@@ -7,7 +7,7 @@ namespace myteam.holiday.WebServer.Services
 {
     public sealed class AppDbWeatherForecastService
     {
-        private AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public AppDbWeatherForecastService(IDbContextFactory<AppDbContext> contextFactory)
         {

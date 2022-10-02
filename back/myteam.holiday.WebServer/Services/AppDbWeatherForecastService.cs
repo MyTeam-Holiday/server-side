@@ -22,6 +22,7 @@ namespace myteam.holiday.WebServer.Services
 
         public async Task<IEnumerable<WeatherForecast>> GetAllAsync()
         {
+            List<WeatherForecast> gg = await _context.WeatherForecasts.ToListAsync();
             return await _context.WeatherForecasts.ToListAsync();
         }
 

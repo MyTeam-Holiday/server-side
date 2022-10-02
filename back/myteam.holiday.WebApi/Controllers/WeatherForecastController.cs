@@ -24,5 +24,11 @@ namespace myteam.holiday.WebApi.Controllers
         {
             return Ok(await _forecastService.GetAllAsync());
         }
+
+        [HttpPost("AddWeatherForecast")]
+        public async Task<ActionResult<int>> PostAsync(WeatherForecast forecast)
+        {
+            return Ok(await _forecastService.AddAsync(forecast));
+        }
     }
 }

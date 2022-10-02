@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace myteam.holiday.Domain.Models
 {
-    internal class Team
+    public class Team: DefaultObject
     {
+        public string? TeamName { get; set; }
+        public string? TeamBase { get; set; }
+        public string? InviteLink { get; set; }
+        public bool Private { get; set; }
+        
     }
 }

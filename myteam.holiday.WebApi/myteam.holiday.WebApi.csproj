@@ -12,10 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\myteam.holiday.WebServer\myteam.holiday.WebServer.csproj" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\myteam.holiday.WebServer\myteam.holiday.EntityFramework.csproj" />
   </ItemGroup>
 </Project>

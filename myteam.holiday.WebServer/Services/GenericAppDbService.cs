@@ -29,7 +29,7 @@ namespace myteam.holiday.EntityFramework.Services
             }
         }
 
-        public async Task<T> GetValue(int id)
+        public async Task<T> GetValue(Guid id)
         {
             using (AppDbContext context = _contextFactory!.CreateDbContext())
             {
@@ -39,7 +39,7 @@ namespace myteam.holiday.EntityFramework.Services
             }
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(Guid id)
         {
             using (AppDbContext context = _contextFactory!.CreateDbContext())
             {
@@ -60,7 +60,7 @@ namespace myteam.holiday.EntityFramework.Services
             }
         }
 
-        public async Task<T> Update(int id, T entity)
+        public async Task<T> Update(Guid id, T entity)
         {
             using (AppDbContext context = _contextFactory!.CreateDbContext())
             {

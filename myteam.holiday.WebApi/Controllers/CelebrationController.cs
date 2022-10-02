@@ -24,7 +24,7 @@ namespace myteam.holiday.WebApi.Controllers
         }
 
         [HttpGet("GetCelebration")]
-        public async Task<ActionResult<Celebration>> GetTeam(int celebrationId)
+        public async Task<ActionResult<Celebration>> GetTeam(Guid celebrationId)
         {
             return Ok(await _appDbService.GetValue(celebrationId));
         }
@@ -36,13 +36,13 @@ namespace myteam.holiday.WebApi.Controllers
         }
 
         [HttpPost("UpdateCelebration")]
-        public async Task<ActionResult<Celebration>> UpdateCelebration(int id, Celebration updatedCelebration)
+        public async Task<ActionResult<Celebration>> UpdateCelebration(Guid id, Celebration updatedCelebration)
         {
             return Ok(await _appDbService.Update(id, updatedCelebration));
         }
 
         [HttpDelete("DeleteCelebration")]
-        public async Task<ActionResult<bool>> DeleteCelebration(int id)
+        public async Task<ActionResult<bool>> DeleteCelebration(Guid id)
         {
             return Ok(await _appDbService.Delete(id));
         }

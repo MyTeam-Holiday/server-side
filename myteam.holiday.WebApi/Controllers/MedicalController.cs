@@ -22,7 +22,7 @@ namespace myteam.holiday.WebApi.Controllers
         }
 
         [HttpGet("GetMedical")]
-        public async Task<ActionResult<Medical>> GetMedical(int medicalId)
+        public async Task<ActionResult<Medical>> GetMedical(Guid medicalId)
         {
             return Ok(await _appDbService.GetValue(medicalId));
         }
@@ -34,13 +34,13 @@ namespace myteam.holiday.WebApi.Controllers
         }
 
         [HttpPost("UpdateMedical")]
-        public async Task<ActionResult<Medical>> UpdateMedical(int id, Medical updatedMedical)
+        public async Task<ActionResult<Medical>> UpdateMedical(Guid id, Medical updatedMedical)
         {
             return Ok(await _appDbService.Update(id, updatedMedical));
         }
 
         [HttpDelete("DeleteMedical")]
-        public async Task<ActionResult<bool>> DeleteMedical(int id)
+        public async Task<ActionResult<bool>> DeleteMedical(Guid id)
         {
             return Ok(await _appDbService.Delete(id));
         }

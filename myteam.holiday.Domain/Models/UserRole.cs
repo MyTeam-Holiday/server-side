@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace myteam.holiday.Domain.Models
 {
-    internal class UserRole
+    public class UserRole: DefaultObject
     {
+        public string? RoleName { get; set; }
     }
 }

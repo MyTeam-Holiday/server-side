@@ -11,6 +11,7 @@ namespace myteam.holiday.WebServer.Data
         internal DbSet<GroupRole> GroupRole => Set<GroupRole>();
         internal DbSet<UserRole> UserRole => Set<UserRole>();
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
+        }
     }
 }

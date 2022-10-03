@@ -26,7 +26,7 @@ namespace myteam.holiday.WebApi.Controllers
         }
 
         [HttpGet("GetGroup")]
-        public async Task<ActionResult<Group>> GetGroup(int groupId)
+        public async Task<ActionResult<Group>> GetGroup(Guid groupId)
         {
             return Ok(await _groupService.GetOneAsync(groupId));
         }
@@ -38,13 +38,13 @@ namespace myteam.holiday.WebApi.Controllers
         }
 
         [HttpPost("UpdateGroup")]
-        public async Task<ActionResult<int>> UpdateGroup(int oldId,Group newGroup)
+        public async Task<ActionResult<int>> UpdateGroup(Guid oldId,Group newGroup)
         {
             return Ok(await _groupService.UpdateGroupAsync(oldId, newGroup));
         }
 
         [HttpDelete("DeleteGroup")]
-        public async Task<ActionResult<int>> DeleteGroup(int id)
+        public async Task<ActionResult<int>> DeleteGroup(Guid id)
         {
             Group group = await _groupService.GetOneAsync(id) ?? new();
             return Ok(await _groupService.DeleteGroupAsync(group));

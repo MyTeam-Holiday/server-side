@@ -19,6 +19,7 @@ namespace myteam.holiday.WebServer.Services
 
         public async Task<int> CreateGroupAsync(Group group)
         {
+            group.Id = Guid.NewGuid();
             await _context.Group.AddAsync(group);
             return await _context.SaveChangesAsync();
         }
@@ -28,12 +29,12 @@ namespace myteam.holiday.WebServer.Services
             return await _context.Group.ToListAsync();
         }
 
-        public async Task<Group?> GetOneAsync(int groupId)
+        public async Task<Group?> GetOneAsync(Guid groupId)
         {
             return await _context.Group.FirstOrDefaultAsync(group => group.Id == groupId);
         }
 
-        public async Task<Group> UpdateGroupAsync(int oldId, Group newGroup)
+        public async Task<Group> UpdateGroupAsync(Guid oldId, Group newGroup)
         {
             newGroup.Id = oldId;
             _context.Group.Update(newGroup);

@@ -26,7 +26,7 @@ namespace myteam.holiday.WebServer.Services
             return await _context.WeatherForecasts.ToListAsync();
         }
 
-        public async Task<WeatherForecast> GetByIdAsync(int id)
+        public async Task<WeatherForecast> GetByIdAsync(Guid id)
         {
             return await _context.WeatherForecasts.FirstOrDefaultAsync(forecast => forecast.Id == id) ?? new();
         }

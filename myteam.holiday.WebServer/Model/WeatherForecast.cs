@@ -1,8 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace myteam.holiday.WebServer.Model
 {
     public class WeatherForecast
     {
-        public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }

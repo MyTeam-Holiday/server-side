@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using myteam.holiday.WebApi.Services;
 using myteam.holiday.WebServer.Data;
 using myteam.holiday.WebServer.Services;
 
@@ -15,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<AppDbWeatherForecastService>();
 builder.Services.AddTransient<AppDbUserService>();
 builder.Services.AddTransient<AppDbGroupService>();
+
+builder.Services.AddTransient<DbValidationService>();
 
 var app = builder.Build();
 

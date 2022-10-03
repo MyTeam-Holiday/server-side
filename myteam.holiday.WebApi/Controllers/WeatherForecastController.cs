@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using myteam.holiday.WebServer.Model;
-using myteam.holiday.WebServer.Services;
+using myteam.holiday.EntityFramework.Services;
+using myteam.holiday.Domain.Models;
+using myteam.holiday.Domain.Services;
 
 namespace myteam.holiday.WebApi.Controllers
 {
@@ -8,27 +9,27 @@ namespace myteam.holiday.WebApi.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly AppDbWeatherForecastService _forecastService;
+        private readonly IGenericAppDbService<WeatherForecast> _appDbService;
         private readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(
             ILogger<WeatherForecastController> logger,
-            AppDbWeatherForecastService forecastService)
+            IGenericAppDbService<WeatherForecast> appDbService)
         {
             _logger = logger;
-            _forecastService = forecastService;
+            _appDbService = appDbService;
         }
 
         [HttpGet("GetWeatherForecast")]
         public async Task<ActionResult<IEnumerable<WeatherForecast>>> GetAsync()
         {
-            return Ok(await _forecastService.GetAllAsync());
+            return Ok(await _appDbService.GetAllValues());
         }
 
         [HttpPost("AddWeatherForecast")]
         public async Task<ActionResult<int>> PostAsync(WeatherForecast forecast)
         {
-            return Ok(await _forecastService.AddAsync(forecast));
+            return Ok(await _appDbService.Create(forecast));
         }
     }
 }

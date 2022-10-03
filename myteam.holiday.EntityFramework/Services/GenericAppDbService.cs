@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using myteam.holiday.Domain.Models;
+using myteam.holiday.Domain.Services;
 using myteam.holiday.EntityFramework.Data;
-using myteam.holiday.WebServer.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +10,9 @@ using System.Threading.Tasks;
 
 namespace myteam.holiday.EntityFramework.Services
 {
-    public class GenericAppDbService<T> where T: DefaultObject
+    public class GenericAppDbService<T>: IGenericAppDbService<T> where T: DefaultObject
     {
-        private readonly AppDbContextFactory? _contextFactory;
-        public GenericAppDbService(AppDbContextFactory? context)
-        {
-            _contextFactory = context;
-        }
+        private readonly AppDbContextFactory? _contextFactory = new AppDbContextFactory();
 
         public async Task<T> Create(T entity)
         {

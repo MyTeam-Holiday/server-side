@@ -1,8 +1,7 @@
-namespace myteam.holiday.WebServer.Model
+namespace myteam.holiday.Domain.Models
 {
-    public class WeatherForecast
+    public class WeatherForecast: DefaultObject
     {
-        public int Id { get; set; }
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }

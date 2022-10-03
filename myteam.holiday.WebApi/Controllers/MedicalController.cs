@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using myteam.holiday.Domain.Models;
+using myteam.holiday.Domain.Services;
 using myteam.holiday.EntityFramework.Services;
 
 namespace myteam.holiday.WebApi.Controllers
@@ -8,9 +9,9 @@ namespace myteam.holiday.WebApi.Controllers
     [Route("[controller]")]
     public class MedicalController : Controller
     {
-        private readonly GenericAppDbService<Medical> _appDbService;
+        private readonly IGenericAppDbService<Medical> _appDbService;
         private readonly ILogger<CelebrationController> _logger;
-        public MedicalController(GenericAppDbService<Medical> appDbService, ILogger<CelebrationController> logger)
+        public MedicalController(IGenericAppDbService<Medical> appDbService, ILogger<CelebrationController> logger)
         {
             _appDbService = appDbService;
             _logger = logger;

@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using myteam.holiday.Domain.Models;
-using myteam.holiday.WebServer.Model;
 
-namespace myteam.holiday.WebServer.Data
+namespace myteam.holiday.EntityFramework.Data
 {
     public class AppDbContext : DbContext
     {

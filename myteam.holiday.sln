@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myteam.holiday.WebApi", "my
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myteam.holiday.Domain", "myteam.holiday.Domain\myteam.holiday.Domain.csproj", "{4C8EEBA5-9521-42A0-9D19-176F6A76A17C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myteam.holiday.EntityFramework", "myteam.holiday.WebServer\myteam.holiday.EntityFramework.csproj", "{0F58E113-12E9-45B4-979B-F1498F949DE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myteam.holiday.EntityFramework", "myteam.holiday.EntityFramework\myteam.holiday.EntityFramework.csproj", "{45E0288F-F077-499A-84DC-53D7A7C60BE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{4C8EEBA5-9521-42A0-9D19-176F6A76A17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C8EEBA5-9521-42A0-9D19-176F6A76A17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C8EEBA5-9521-42A0-9D19-176F6A76A17C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F58E113-12E9-45B4-979B-F1498F949DE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F58E113-12E9-45B4-979B-F1498F949DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F58E113-12E9-45B4-979B-F1498F949DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F58E113-12E9-45B4-979B-F1498F949DE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45E0288F-F077-499A-84DC-53D7A7C60BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45E0288F-F077-499A-84DC-53D7A7C60BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45E0288F-F077-499A-84DC-53D7A7C60BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45E0288F-F077-499A-84DC-53D7A7C60BE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

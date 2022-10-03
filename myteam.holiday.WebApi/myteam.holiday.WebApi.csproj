@@ -16,6 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\myteam.holiday.WebServer\myteam.holiday.EntityFramework.csproj" />
+    <ProjectReference Include="..\myteam.holiday.EntityFramework\myteam.holiday.EntityFramework.csproj" />
   </ItemGroup>
 </Project>

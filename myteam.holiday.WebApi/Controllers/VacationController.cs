@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using myteam.holiday.Domain.Models;
+using myteam.holiday.Domain.Services;
 using myteam.holiday.EntityFramework.Services;
 
 namespace myteam.holiday.WebApi.Controllers
@@ -8,10 +9,10 @@ namespace myteam.holiday.WebApi.Controllers
     [Route("[controller]")]
     public class VacationController : Controller
     {
-        private readonly GenericAppDbService<Vacation> _appDbService;
+        private readonly IGenericAppDbService<Vacation> _appDbService;
         private readonly ILogger<VacationController> _logger;
 
-        public VacationController(GenericAppDbService<Vacation> appDbService, ILogger<VacationController> logger)
+        public VacationController(IGenericAppDbService<Vacation> appDbService, ILogger<VacationController> logger)
         {
             _appDbService = appDbService;
             _logger = logger;

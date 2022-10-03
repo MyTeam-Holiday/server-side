@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using myteam.holiday.WebServer.Data;
 using Pomelo.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,11 +14,9 @@ namespace myteam.holiday.EntityFramework.Data
         public AppDbContext CreateDbContext(string[] args = null!)
         {
             var options = new DbContextOptionsBuilder<AppDbContext>();
-            options.UseMySql(
-                    "server=localhost;user id=root;password=12345;database=dev.myteam.holiday",
-                    new MySqlServerVersion(new Version(10, 10, 1))
-                );
-
+            options.UseMySql("server=localhost;user id=root;password=12345;database=dev.myteam.holiday",
+                new MySqlServerVersion(new Version(10, 10, 1)));
+                
             return new AppDbContext(options.Options);
         }
     }

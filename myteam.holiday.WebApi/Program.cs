@@ -1,13 +1,23 @@
 using Microsoft.EntityFrameworkCore;
-using myteam.holiday.WebServer.Data;
-using myteam.holiday.WebServer.Services;
+using myteam.holiday.Domain.Models;
+using myteam.holiday.Domain.Services;
+using myteam.holiday.EntityFramework.Data;
+using myteam.holiday.EntityFramework.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<AppDbWeatherForecastService>();
+builder.Services.AddTransient<IGenericAppDbService<Celebration>, GenericAppDbService<Celebration>>();
+builder.Services.AddTransient<IGenericAppDbService<Medical>, GenericAppDbService<Medical>>();
+builder.Services.AddTransient<IGenericAppDbService<Team>, GenericAppDbService<Team>>();
+builder.Services.AddTransient<IGenericAppDbService<UserRole>, GenericAppDbService<UserRole>>();
+builder.Services.AddTransient<IGenericAppDbService<Vacation>, GenericAppDbService<Vacation>>();
+builder.Services.AddTransient<IGenericAppDbService<WeatherForecast>, GenericAppDbService<WeatherForecast>>();
+builder.Services.AddTransient<IGenericAppDbService<Weekend>, GenericAppDbService<Weekend>>();
+
+
 
 var app = builder.Build();
 
@@ -24,3 +34,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

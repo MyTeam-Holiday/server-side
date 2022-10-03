@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using myteam.holiday.Domain.Models;
+using myteam.holiday.Domain.Services;
 using myteam.holiday.EntityFramework.Services;
 
 namespace myteam.holiday.WebApi.Controllers
@@ -9,12 +10,12 @@ namespace myteam.holiday.WebApi.Controllers
     [Route("[controller]")]
     public class UserRoleController : Controller
     {
-        private readonly GenericAppDbService<UserRole> _appDbService;
+        private readonly IGenericAppDbService<UserRole> _appDbService;
         private readonly ILogger<UserRoleController> _logger;
 
         public UserRoleController(
             ILogger<UserRoleController> logger,
-            GenericAppDbService<UserRole> appDbService)
+            IGenericAppDbService<UserRole> appDbService)
         {
             _logger = logger;
             _appDbService = appDbService;

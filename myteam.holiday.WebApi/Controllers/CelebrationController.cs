@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using myteam.holiday.Domain.Models;
+using myteam.holiday.Domain.Services;
 using myteam.holiday.EntityFramework.Services;
 
 namespace myteam.holiday.WebApi.Controllers
@@ -9,10 +10,10 @@ namespace myteam.holiday.WebApi.Controllers
     [Route("[controller]")]
     public class CelebrationController : Controller
     {
-        private readonly GenericAppDbService<Celebration> _appDbService;
+        private readonly IGenericAppDbService<Celebration> _appDbService;
         private readonly ILogger<CelebrationController> _logger;
 
-        public CelebrationController(GenericAppDbService<Celebration> appDbService, ILogger<CelebrationController> logger)
+        public CelebrationController(IGenericAppDbService<Celebration> appDbService, ILogger<CelebrationController> logger)
         {
             _appDbService = appDbService;
             _logger = logger;

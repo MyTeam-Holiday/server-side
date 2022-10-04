@@ -1,0 +1,243 @@
+{
+	"info": {
+		"_postman_id": "a599a024-5d89-4ea3-9fb6-6c959eb9bf30",
+		"name": "CrudCrud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1577017"
+	},
+	"item": [
+		{
+			"name": "Read all collections",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://crudcrud.com/api/{{resource}}",
+					"protocol": "https",
+					"host": [
+						"crudcrud",
+						"com"
+					],
+					"path": [
+						"api",
+						"{{resource}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read a collection",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://crudcrud.com/api/{{resource}}/:collection_name",
+					"protocol": "https",
+					"host": [
+						"crudcrud",
+						"com"
+					],
+					"path": [
+						"api",
+						"{{resource}}",
+						":collection_name"
+					],
+					"variable": [
+						{
+							"key": "collection_name",
+							"value": "{{collection_name}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read an item from collection",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://crudcrud.com/api/{{resource}}/:collection_name/:id",
+					"protocol": "https",
+					"host": [
+						"crudcrud",
+						"com"
+					],
+					"path": [
+						"api",
+						"{{resource}}",
+						":collection_name",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "collection_name",
+							"value": "Test"
+						},
+						{
+							"key": "id",
+							"value": "6169628897069d03e848efe8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an entity in collection",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Sparkle Angel\",\"age\":2,\"colour\":\"blue\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://crudcrud.com/api/{{resource}}/:collection_name",
+					"protocol": "https",
+					"host": [
+						"crudcrud",
+						"com"
+					],
+					"path": [
+						"api",
+						"{{resource}}",
+						":collection_name"
+					],
+					"variable": [
+						{
+							"key": "collection_name",
+							"value": "{{collection_name}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an entity",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"friendlyRequestId\": \"RITM0010005\",\r\n    \"transactionObject\": \"member\",\r\n    \"requestAction\": \"I\",\r\n    \"completed\": 1,\r\n    \"error\": 0,\r\n    \"message\": \"STP AddRemove\",\r\n    \"dateSubmited\": \"2021-10-17 15:30:20.123\",\r\n    \"dateCompleted\": \"2021-10-17 15:33:20.123\",\r\n    \"requestClientId\": \"svcacc\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://crudcrud.com/api/{{resource}}/:collection_name/:id",
+					"protocol": "https",
+					"host": [
+						"crudcrud",
+						"com"
+					],
+					"path": [
+						"api",
+						"{{resource}}",
+						":collection_name",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "collection_name",
+							"value": "{{collection_name}}"
+						},
+						{
+							"key": "id",
+							"value": "6169f9ed97069d03e848f013"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an entity",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://crudcrud.com/api/{{resource}}/:collection_name/:id",
+					"protocol": "https",
+					"host": [
+						"crudcrud",
+						"com"
+					],
+					"path": [
+						"api",
+						"{{resource}}",
+						":collection_name",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "collection_name",
+							"value": "{{collection_name}}"
+						},
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

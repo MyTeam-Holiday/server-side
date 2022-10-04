@@ -38,7 +38,7 @@ namespace myteam.holiday.EntityFramework.Services
             User user = await GetOneEmailAsync(newUser.UserEmail!) ?? new();
             //newUser.PasswordHash = user.PasswordHash не сделан так как браузер и телега
             //будет создавать хэш и передавать его в теле
-            newUser.PasswordSalt = user.PasswordSalt;
+            newUser.PasswordSalt = user.PasswordSalt; //Salt никогда не меняется
 
             context.User.Update(newUser);
             await context.SaveChangesAsync();

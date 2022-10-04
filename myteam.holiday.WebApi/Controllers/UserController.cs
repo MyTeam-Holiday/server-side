@@ -40,7 +40,7 @@ namespace myteam.holiday.WebApi.Controllers
             if (user == null) return BadRequest("Ошибка: некорректные данные модели User");
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,
-                salt: Encoding.ASCII.GetBytes(user.PasswordSalt!),
+                salt: Encoding.Unicode.GetBytes(user.PasswordSalt!),
                 prf: KeyDerivationPrf.HMACSHA256,
                 iterationCount: 100000,
                 numBytesRequested: 256 / 8));
@@ -70,7 +70,7 @@ namespace myteam.holiday.WebApi.Controllers
             if (_validationService.IsValidUserModel(user) &&
                 await _appDbService.GetOneEmailAsync(user.UserEmail!) == null)
             {
-                byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+                byte[] salt = RandomNumberGenerator.GetBytes(16);
                 string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                     password: password,
                     salt: salt,
@@ -78,7 +78,9 @@ namespace myteam.holiday.WebApi.Controllers
                     iterationCount: 100000,
                     numBytesRequested: 256 / 8));
                 user.PasswordHash = hashed;
-                user.PasswordSalt = Encoding.ASCII.GetString(salt);
+                user.PasswordSalt = Encoding.Unicode.GetString(salt);
+                user.Id = Guid.NewGuid();
+                user.UserRole!.Id = Guid.NewGuid();
                 await _appDbService.CreateUserAsync(user);
                 return Ok(hashed);
             }

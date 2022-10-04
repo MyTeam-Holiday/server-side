@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\myteam.holiday.EntityFramework\myteam.holiday.EntityFramework.csproj" />
   </ItemGroup>
 </Project>

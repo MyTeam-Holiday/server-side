@@ -10,6 +10,7 @@ namespace myteam.holiday.Domain.Models
     {
         public string? Username { get; set; }
         public string? UserEmail { get; set; }
+        public string? PasswordSalt { get; set; }
         public string? PasswordHash { get; set; }
         public UserRole? UserRole { get; set; }
         public bool CreateOpportunity { get; set; }

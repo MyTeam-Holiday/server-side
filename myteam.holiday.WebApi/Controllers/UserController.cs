@@ -36,16 +36,9 @@ namespace myteam.holiday.WebApi.Controllers
         [HttpGet("GetUserToJoinAccount")]
         public async Task<ActionResult<User>> GetUserToJoinAccount(string email, string password)
         {
-            User? user = await _appDbService.GetOneEmailAsync(email);
-            if (user == null) return BadRequest("Ошибка: некорректные данные модели User");
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: Encoding.Unicode.GetBytes(user.PasswordSalt!),
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 100000,
-                numBytesRequested: 256 / 8));
-            if (await _appDbService.IsConvergeUserHashAsync(email, hashed))
+            if (await _validationService.IsCanJoinUserInAccount(email, password))
             {
+                User? user = await _appDbService.GetOneEmailAsync(email) ?? new();
                 user.PasswordSalt = default;
                 return Ok(user);
             }
@@ -67,8 +60,7 @@ namespace myteam.holiday.WebApi.Controllers
         [HttpPost("CreateUser")]
         public async Task<ActionResult<string>> CreateUser(User user, string password)
         {
-            if (_validationService.IsValidUserModel(user) &&
-                await _appDbService.GetOneEmailAsync(user.UserEmail!) == null)
+            if (await _validationService.IsCanCreateUserAccount(user))
             {
                 byte[] salt = RandomNumberGenerator.GetBytes(16);
                 string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -90,9 +82,7 @@ namespace myteam.holiday.WebApi.Controllers
         [HttpPost("UpdateUser")]
         public async Task<ActionResult<User>> UpdateUser(User newUser, string hash)
         {
-            if (_validationService.IsValidUserModel(newUser) &&
-                await _appDbService.GetOneEmailAsync(newUser.UserEmail!) != null &&
-                await _appDbService.IsConvergeUserHashAsync(newUser.UserEmail!, hash))
+            if (await _validationService.IsCanUpdateUserAccount(newUser, hash))
             {
                 await _appDbService.UpdateUserAsync(newUser);
                 return newUser;

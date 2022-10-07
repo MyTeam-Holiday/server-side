@@ -26,7 +26,7 @@ RETURN
            ));
 
 CREATE TABLE `User` (
-	GuId VARCHAR(36) NOT NULL PRIMARY KEY,              
+	GuId BINARY(16) NOT NULL PRIMARY KEY,              
 	Username VARCHAR(50),
 	UserEmail VARCHAR(50),
 	PasswordHash VARCHAR (256) NULL,
@@ -35,21 +35,21 @@ CREATE TABLE `User` (
 	);
 
 CREATE TABLE `UserRole` (
-	GuId VARCHAR(36) NOT NULL PRIMARY KEY,              
+	GuId BINARY(16) NOT NULL PRIMARY KEY,              
 	RoleName VARCHAR(50),
 	RoleStatus INT NOT NULL
 	);
 	
 CREATE TABLE `Base` (
-	GuId VARCHAR(36) NOT NULL PRIMARY KEY, 
+	GuId BINARY(16) NOT NULL PRIMARY KEY, 
 	BaseName VARCHAR(50),
 	BaseSecret VARCHAR(256)
 	);
 	
 CREATE TABLE `Team` (
-	GuId VARCHAR(36) NOT NULL PRIMARY KEY, 
+	GuId BINARY(16) NOT NULL PRIMARY KEY, 
 	TeamName VARCHAR(50) NOT NULL,
-	BaseGuId VARCHAR(36) NOT NULL,
+	BaseGuId BINARY(16) NOT NULL,
 	PasswordHash VARCHAR(256) NULL,
 	PasswordSalt VARCHAR(256) NULL,
 	InviteLink VARCHAR(256) NULL,
@@ -62,10 +62,10 @@ CREATE TABLE `Team` (
 	);
 	
 CREATE TABLE `TeamUser` (
-	GuId VARCHAR(36) NOT NULL PRIMARY KEY, 
-	UserGuId VARCHAR(36),
-	TeamGuId VARCHAR(36),
-	UserRoleGuId VARCHAR(36),
+	GuId BINARY(16) NOT NULL PRIMARY KEY, 
+	UserGuId BINARY(16),
+	TeamGuId BINARY(16),
+	UserRoleGuId BINARY(16),
 	
 	CONSTRAINT `fk_TeamUser_User`
 		FOREIGN KEY (UserGuId) REFERENCES `User` (GuId)
@@ -84,11 +84,11 @@ CREATE TABLE `TeamUser` (
 	);
 	
 CREATE TABLE `Holiday` (
-	GuId VARCHAR(36) NOT NULL PRIMARY KEY,              
+	GuId BINARY(16) NOT NULL PRIMARY KEY,              
 	HolidayName VARCHAR(50),
 	HolidayStatus INT,
 	HolidayTimeStamp INT NOT NULL,
-	UserGuId VARCHAR(36),
+	UserGuId BINARY(16),
 	CONSTRAINT `fk_Holiday_User`
 		FOREIGN KEY (UserGuId) REFERENCES `User` (GuId)
 		ON DELETE CASCADE
@@ -96,9 +96,9 @@ CREATE TABLE `Holiday` (
 	);	
 	
 CREATE TABLE `TeamHoliday` (
-	GuId VARCHAR(36) NOT NULL PRIMARY KEY, 
-	HolidayGuId VARCHAR(36),
-	TeamGuId VARCHAR(36),
+	GuId BINARY(16) NOT NULL PRIMARY KEY, 
+	HolidayGuId BINARY(16),
+	TeamGuId BINARY(16),
 	CONSTRAINT `fk_TeamHoliday_Holiday`
 	FOREIGN KEY (HolidayGuId) REFERENCES `Holiday` (GuId)
 	ON DELETE CASCADE
@@ -120,16 +120,16 @@ INSERT INTO `UserRole` (
 	
 	VALUES (
 	UuidToBin(UUID()),
-	"Admin",
+	'Admin',
 	3
 	),
 	(
 	UuidToBin(UUID()),
-	"Moderator",
+	'Moderator',
 	2
 	),
    (
 	UuidToBin(UUID()),
-	"User",
+	'User',
 	1
 	);

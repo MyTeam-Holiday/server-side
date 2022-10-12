@@ -9,7 +9,6 @@
             "type": "shell",
             "args": [
                 "build",
-                "back/myteam.holiday.WebApi",
                 // Ask dotnet build to generate full paths for file names.
                 "/property:GenerateFullPaths=true",
                 // Do not generate summary otherwise it leads to duplicate errors in Problems panel
@@ -23,6 +22,57 @@
                 "reveal": "silent"
             },
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "publish",
+                "myteam.holiday.WebApi",
+                "/property:Configuration=Release"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish_single_file",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "publish",
+                "myteam.holiday.WebApi",
+                "/property:Configuration=Release",
+                "/property:PublishSingleFile=true",
+                "/property:RuntimeIdentifier=${input:rid}"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "rid",
+            "description": "Select Runtime Identifier (RID)",
+            "options": [
+                "win-x64",
+                "win-x86",
+                "win-arm",
+                "win-arm64",
+                "linux-x64",
+                "linux-x86",
+                "linux-arm",
+                "linux-arm64",
+                "osx-x64",
+            ],
+            //"default": "linux-x64"
         }
     ]
 }

@@ -12,7 +12,12 @@ namespace myteam.holiday.EntityFramework.Services
 {
     public class GenericAppDbService<T>: IGenericAppDbService<T> where T: DefaultObject
     {
-        private readonly AppDbContextFactory? _contextFactory = new AppDbContextFactory();
+        private readonly AppDbContextFactory? _contextFactory;
+
+        public GenericAppDbService(AppDbContextFactory contextFactory)
+        {
+            _contextFactory = contextFactory;
+        }
 
         public async Task<T> Create(T entity)
         {

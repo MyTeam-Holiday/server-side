@@ -11,8 +11,13 @@ namespace myteam.holiday.EntityFramework.Services
 {
     public class UserAppDbService
     {
-        private readonly AppDbContextFactory? _contextFactory = new AppDbContextFactory();
+        private readonly AppDbContextFactory? _contextFactory;
 
+        public UserAppDbService(AppDbContextFactory contextFactory)
+        {
+            _contextFactory = contextFactory;
+        }
+        
         public async Task<List<User>> GetAllAsync()
         {
             using AppDbContext context = _contextFactory!.CreateDbContext();

@@ -5,11 +5,18 @@ using myteam.holiday.EntityFramework.Data;
 using myteam.holiday.EntityFramework.Services;
 using myteam.holiday.WebApi.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", false) // Common settings
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true) // Development, Stagging or Production settings
+    .AddJsonFile("appsettings.Local.json", true, true); // Local settings
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<AppDbContextFactory>();
 builder.Services.AddTransient<UserAppDbService>();
 
 builder.Services.AddTransient<IGenericAppDbService<Celebration>, GenericAppDbService<Celebration>>();

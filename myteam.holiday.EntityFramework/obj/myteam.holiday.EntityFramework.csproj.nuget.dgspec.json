@@ -1,0 +1,140 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/zmqp/github/team.holiday/myteam.holiday.EntityFramework/myteam.holiday.EntityFramework.csproj": {}
+  },
+  "projects": {
+    "/home/zmqp/github/team.holiday/myteam.holiday.Domain/myteam.holiday.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/zmqp/github/team.holiday/myteam.holiday.Domain/myteam.holiday.Domain.csproj",
+        "projectName": "myteam.holiday.Domain",
+        "projectPath": "/home/zmqp/github/team.holiday/myteam.holiday.Domain/myteam.holiday.Domain.csproj",
+        "packagesPath": "/home/zmqp/.nuget/packages/",
+        "outputPath": "/home/zmqp/github/team.holiday/myteam.holiday.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/zmqp/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/dotnet6-6.0.109/sdk/6.0.109/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/zmqp/github/team.holiday/myteam.holiday.EntityFramework/myteam.holiday.EntityFramework.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/zmqp/github/team.holiday/myteam.holiday.EntityFramework/myteam.holiday.EntityFramework.csproj",
+        "projectName": "myteam.holiday.EntityFramework",
+        "projectPath": "/home/zmqp/github/team.holiday/myteam.holiday.EntityFramework/myteam.holiday.EntityFramework.csproj",
+        "packagesPath": "/home/zmqp/.nuget/packages/",
+        "outputPath": "/home/zmqp/github/team.holiday/myteam.holiday.EntityFramework/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/zmqp/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/home/zmqp/github/team.holiday/myteam.holiday.Domain/myteam.holiday.Domain.csproj": {
+                "projectPath": "/home/zmqp/github/team.holiday/myteam.holiday.Domain/myteam.holiday.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/dotnet6-6.0.109/sdk/6.0.109/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

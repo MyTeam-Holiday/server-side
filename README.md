@@ -1,2 +1,0 @@
-# myteam.holiday
-Server repo

@@ -5,14 +5,14 @@ namespace myteam.holiday.EntityFramework.Data
 {
     public class AppDbContext : DbContext
     {
-        internal DbSet<WeatherForecast> WeatherForecasts => Set<WeatherForecast>();
-        internal DbSet<Celebration> Group => Set<Celebration>();
-        internal DbSet<Medical> Medical => Set<Medical>();
+        internal DbSet<Base> Base => Set<Base>();
+        internal DbSet<Holiday> Holiday => Set<Holiday>();
         internal DbSet<Team> Team => Set<Team>();
+        internal DbSet<TeamHoliday> TeamHoliday => Set<TeamHoliday>();
+        internal DbSet<TeamUser> TeamUser => Set<TeamUser>();
         internal DbSet<User> User => Set<User>();
         internal DbSet<UserRole> UserRole => Set<UserRole>();
-        internal DbSet<Vacation> Vacation => Set<Vacation>();
-        internal DbSet<Weekend> Weekend => Set<Weekend>();
+        internal DbSet<UserGuId> UserGuId => Set<UserGuId>();
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
     }

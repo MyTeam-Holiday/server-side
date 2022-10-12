@@ -1,0 +1,12 @@
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/bin/Debug/net6.0/myteam.holiday.Domain.deps.json
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/bin/Debug/net6.0/myteam.holiday.Domain.dll
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/bin/Debug/net6.0/ref/myteam.holiday.Domain.dll
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/bin/Debug/net6.0/myteam.holiday.Domain.pdb
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/obj/Debug/net6.0/myteam.holiday.Domain.csproj.AssemblyReference.cache
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/obj/Debug/net6.0/myteam.holiday.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/obj/Debug/net6.0/myteam.holiday.Domain.AssemblyInfoInputs.cache
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/obj/Debug/net6.0/myteam.holiday.Domain.AssemblyInfo.cs
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/obj/Debug/net6.0/myteam.holiday.Domain.csproj.CoreCompileInputs.cache
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/obj/Debug/net6.0/myteam.holiday.Domain.dll
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/obj/Debug/net6.0/ref/myteam.holiday.Domain.dll
+/home/zmqp/github/team.holiday/myteam.holiday.Domain/obj/Debug/net6.0/myteam.holiday.Domain.pdb

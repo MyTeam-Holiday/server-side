@@ -12,9 +12,11 @@ UPDATE `User`
 	SET
 	PasswordHash = PasswordHashIn,
 	PasswordSalt = PasswordSaltIn,
-	HasVefiried = TRUE;
+	HasVerified = TRUE
+	WHERE 
+	UuidToBin(GuIdIn) = GuId;
 	
-SELECT UuidFromBin(GuId) INTO GuIdOut FROM `User`
+SELECT UuidFromBin(GuId) FROM `User`
 	WHERE
 	PasswordHash = PasswordHashIn;
 	

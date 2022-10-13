@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/back/myteam.holiday.WebApi/bin/Debug/net6.0/myteam.holiday.WebApi.dll",
+            "program": "${workspaceFolder}/myteam.holiday.WebApi/bin/Debug/net6.0/myteam.holiday.WebApi.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/myteam.holiday.WebApi",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -30,9 +30,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/back/myteam.holiday.WebApi/bin/Debug/net6.0/myteam.holiday.WebApi.dll",
+            "program": "${workspaceFolder}/myteam.holiday.WebApi/bin/Debug/net6.0/myteam.holiday.WebApi.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/myteam.holiday.WebApi",
             "stopAtEntry": false,
             "console": "internalConsole"
         }

@@ -1,3 +1,5 @@
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using myteam.holiday.Domain.Models;
 using myteam.holiday.Domain.Services;
@@ -11,7 +13,18 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true) // Development, Stagging or Production settings
     .AddJsonFile("appsettings.Local.json", true, true); // Local settings
 
+
 builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+//services.AddValidatorsFromAssemblyComtaining<MyValidator>();
+
+// Configure the API versioning properties of the project. 
+//builder.Services.AddApiVersioningConfigured();
+
+// Add a Swagger generator and Automatic Request and Response annotations:
+//builder.Services.AddSwaggerSwashbuckleConfigured();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

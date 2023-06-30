@@ -5,4 +5,4 @@ image:
 
 build_script:
   - ps: dotnet restore
-   dotnet build
+  - dotnet build

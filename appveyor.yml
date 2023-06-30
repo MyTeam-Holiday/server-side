@@ -3,7 +3,3 @@ image:
   - Ubuntu
   - macOS
 
-environment:
-  matrix:
-    - CLI_VERSION: 6.0.7
-    - CLI_VERSION: Latest

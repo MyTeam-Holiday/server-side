@@ -4,5 +4,4 @@ image:
   - macOS
 
 build_script:
-  cmd: dotnet restore /
-  dotnet build
+  - ps: dotnet restore / dotnet build

@@ -3,3 +3,6 @@ image:
   - Ubuntu
   - macOS
 
+build_script:
+  cmd: dotnet restore 
+  cmd: dotnet build

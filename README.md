@@ -1,2 +1,2 @@
 # myteam.holiday
-Server repo
+Server rep

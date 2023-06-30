@@ -1,3 +1,8 @@
+image:
+  - Visual Studio 2019
+  - Ubuntu
+  - macOS
+  
 environment:
   matrix:
     - CLI_VERSION: 6.0.7

@@ -5,7 +5,8 @@ using myteam.holiday.Domain.Models;
 using myteam.holiday.Domain.Services;
 using myteam.holiday.EntityFramework.Data;
 using myteam.holiday.EntityFramework.Services;
-
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
@@ -34,6 +35,26 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ITeamRepository, TeamRepository>();
 builder.Services.AddTransient<IHolidayRepository, HolidayRepository>();
 
+builder.Services.AddAuthentication("cookie")
+    .AddCookie("cookie")
+    .AddGoogle("google", o =>
+    {
+        o.SignInScheme = "cookie";
+
+        o.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        o.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+
+        o.Events.OnCreatingTicket = async ctc =>
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, o.UserInformationEndpoint);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", ctc.AccessToken);
+            using var response = await ctc.Backchannel.SendAsync(request);
+            var userData = await response.Content.ReadFromJsonAsync<JsonElement>();
+            ctc.RunClaimActions(userData);
+        };
+    });
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -43,6 +64,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -5,7 +5,7 @@ using myteam.holiday.Domain.Services;
 namespace myteam.holiday.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;

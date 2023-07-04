@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using myteam.holiday.Domain.Models;
 using myteam.holiday.Domain.Services;
@@ -5,7 +6,7 @@ using myteam.holiday.Domain.Services;
 namespace myteam.holiday.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -18,7 +19,7 @@ namespace myteam.holiday.WebApi.Controllers
 
         [HttpPost, Route("PreCreateUser")]
         public async Task<string> PreCreateUser(string userName, string userEmail)
-        {
+        {           
             return await _userRepository.PreCreateUser(userName, userEmail);
         }
         [HttpPost, Route("CreateUser")]
@@ -26,6 +27,7 @@ namespace myteam.holiday.WebApi.Controllers
         {
             return await _userRepository.CreateUser(user);
         }
+        
         [HttpGet, Route("GetUserByGuId")]
         public async Task<User> GetUserById(string guId)
         {

@@ -1,12 +1,8 @@
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.EntityFrameworkCore;
-using myteam.holiday.Domain.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using myteam.holiday.Domain.Services;
 using myteam.holiday.EntityFramework.Data;
 using myteam.holiday.EntityFramework.Services;
-using System.Net.Http.Headers;
-using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
@@ -35,25 +31,25 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ITeamRepository, TeamRepository>();
 builder.Services.AddTransient<IHolidayRepository, HolidayRepository>();
 
-builder.Services.AddAuthentication("cookie")
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie("cookie")
-    .AddGoogle("google", o =>
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddGoogle(o =>
     {
-        o.SignInScheme = "cookie";
+        o.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
         o.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-        o.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-
-        o.Events.OnCreatingTicket = async ctc =>
-        {
-            using var request = new HttpRequestMessage(HttpMethod.Get, o.UserInformationEndpoint);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", ctc.AccessToken);
-            using var response = await ctc.Backchannel.SendAsync(request);
-            var userData = await response.Content.ReadFromJsonAsync<JsonElement>();
-            ctc.RunClaimActions(userData);
-        };
+        o.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];        
     });
 
+builder.Services.AddAuthorization(o =>
+{
+    o.AddPolicy("Roles", policy =>
+    {
+        policy.RequireRole("Moderator", "Admin")
+              .RequireAuthenticatedUser();
+    });
+});
 
 var app = builder.Build();
 

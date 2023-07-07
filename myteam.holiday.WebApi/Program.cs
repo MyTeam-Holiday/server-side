@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using myteam.holiday.Domain.Models;
 using System.IO;
+using myteam.holiday.WebApi;
 
 namespace myteam.holiday.init
 {

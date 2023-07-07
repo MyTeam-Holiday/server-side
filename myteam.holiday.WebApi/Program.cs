@@ -1,71 +1,24 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using myteam.holiday.Domain.Services;
-using myteam.holiday.EntityFramework.Data;
-using myteam.holiday.EntityFramework.Services;
+using myteam.holiday.WebApi;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("appsettings.json", false) // Common settings
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true) // Development, Stagging or Production settings
-    .AddJsonFile("appsettings.Local.json", true, true); // Local settings
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using System.IO;
 
-
-builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidationClientsideAdapters();
-//services.AddValidatorsFromAssemblyComtaining<MyValidator>();
-
-// Configure the API versioning properties of the project. 
-//builder.Services.AddApiVersioningConfigured();
-
-// Add a Swagger generator and Automatic Request and Response annotations:
-//builder.Services.AddSwaggerSwashbuckleConfigured();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// builder.Services.AddSingleton<ModelValidationService>();
-builder.Services.AddSingleton<AppDbContextFactory>();
-builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<ITeamRepository, TeamRepository>();
-builder.Services.AddTransient<IHolidayRepository, HolidayRepository>();
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie("cookie")
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddGoogle(o =>
-    {
-        o.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-
-        o.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-        o.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];        
-    });
-
-builder.Services.AddAuthorization(o =>
+public partial class Program
 {
-    o.AddPolicy("Roles", policy =>
+    public static void Main(string[] args)
     {
-        policy.RequireRole("Moderator", "Admin")
-              .RequireAuthenticatedUser();
-    });
-});
+        CreateHostBuilder(args).Build().Run();
+    }
 
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
 

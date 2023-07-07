@@ -28,13 +28,13 @@ namespace myteam.holiday.WebApi.Controllers
         [HttpPost, Route("Registration")]
         public async Task<IActionResult> Registration([FromBody] UserRegDto regModel)
         {
-            
+
             var user = await _userRepository.GetUserByEmail(regModel.UserEmail!);
             if (user != null) return BadRequest("User already exists");
 
             var hashPassword = CreateHash(regModel.Password);
             var token = CreateRandomToken();
-            var u = await _userRepository.PreCreateUser(regModel.UserName!, regModel.UserEmail!);
+
             var userGuId = await _userRepository.CreateUser(new User
             {
                 UserName = regModel.UserName,
@@ -125,6 +125,6 @@ namespace myteam.holiday.WebApi.Controllers
             BCrypt.Net.BCrypt.EnhancedVerify(password, passwordHash);
 
         private string CreateRandomToken() =>            
-            $"{Convert.ToHexString(RandomNumberGenerator.GetBytes(32))}";        
+            $"https://{HttpContext.Request.Host}/Auth/Verify?token={Convert.ToHexString(RandomNumberGenerator.GetBytes(32))}";        
     }
 }

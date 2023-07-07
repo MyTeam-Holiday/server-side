@@ -63,7 +63,7 @@ namespace myteam.holiday.EntityFramework.Services
 
                 var user = new User(){
                     GuId = result.First().GuId,
-                    Username = result.First().Username,
+                    UserName = result.First().UserName,
                     UserEmail = result.First().UserEmail,
                     PasswordHash = result.First().PasswordHash,
                     PasswordSalt = result.First().PasswordSalt,
@@ -86,7 +86,7 @@ namespace myteam.holiday.EntityFramework.Services
 
                 var user = new User(){
                     GuId = result.First().GuId,
-                    Username = result.First().Username,
+                    UserName = result.First().UserName,
                     UserEmail = result.First().UserEmail,
                     PasswordHash = result.First().PasswordHash,
                     PasswordSalt = result.First().PasswordSalt,
@@ -112,7 +112,7 @@ namespace myteam.holiday.EntityFramework.Services
         {
             using (AppDbContext _context = _contextFactory.CreateDbContext()){
                 var userGuIdParam = new MySqlParameter("@GuId", user.GuId);
-                var userNameParam = new MySqlParameter("@userName", user.Username);
+                var userNameParam = new MySqlParameter("@userName", user.UserName);
                 var userEmailParam = new MySqlParameter("@userEmail", user.UserEmail);
                 var userPasswordHash = new MySqlParameter("@PasswordHash", user.PasswordHash);
                 var userPasswordSalt = new MySqlParameter("@PasswordSalt", user.PasswordSalt);

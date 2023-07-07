@@ -37,7 +37,7 @@ namespace myteam.holiday.WebApi.Controllers
             var u = await _userRepository.PreCreateUser(regModel.UserName!, regModel.UserEmail!);
             var userGuId = await _userRepository.CreateUser(new User
             {
-                Username = regModel.UserName,
+                UserName = regModel.UserName,
                 UserEmail = regModel.UserEmail,
                 PasswordHash = hashPassword,
                 //VerifyToken = CreateRandomToken().Split('=')[1],

@@ -13,7 +13,7 @@ namespace myteam.holiday.Domain.Models
         [Key]
         [Column("GuId")]
         public Guid GuId { get; set; }
-        public string? Username { get; set; }
+        public string? UserName { get; set; }
         public string? UserEmail { get; set; }
         public string? PasswordSalt { get; set; }
         public string? PasswordHash { get; set; }

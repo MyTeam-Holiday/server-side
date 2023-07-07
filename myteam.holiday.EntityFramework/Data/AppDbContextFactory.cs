@@ -22,8 +22,7 @@ namespace myteam.holiday.EntityFramework.Data
         public AppDbContext CreateDbContext(string[] args = null!)
         {
             var options = new DbContextOptionsBuilder<AppDbContext>();
-            options.UseMySql(_configuration.GetConnectionString("DefaultConnection")
-                ?? "server=localhost;user id=root;password=12345;database=dev.myteam.holiday",
+            options.UseMySql(_configuration.GetConnectionString("DefaultConnection"),
                 new MySqlServerVersion(new Version(10, 10, 1)));
 
             return new AppDbContext(options.Options);

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myteam.holiday.Domain", "my
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myteam.holiday.EntityFramework", "myteam.holiday.EntityFramework\myteam.holiday.EntityFramework.csproj", "{45E0288F-F077-499A-84DC-53D7A7C60BE2}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "myteam.holiday.db", "myteam.holiday.db\myteam.holiday.db.sqlproj", "{CEED8129-914F-4693-A83D-CA623C00E71F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		DEV|Any CPU = DEV|Any CPU

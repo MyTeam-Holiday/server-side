@@ -1,0 +1,22 @@
+﻿CREATE TABLE [dbo].[MyTeamTeamUser]
+(
+	GuId BINARY(16) NOT NULL PRIMARY KEY, 
+	[UserGuId] BINARY(16),
+	[TeamGuId] BINARY(16),
+	[UserRoleGuId] BINARY(16),
+	
+	--CONSTRAINT `fk_TeamUser_User`
+		--FOREIGN KEY (UserGuId) REFERENCES `User` (GuId)
+		--ON DELETE CASCADE
+		--ON UPDATE RESTRICT,
+		
+	--CONSTRAINT `fk_TeamUser_Team`
+		--FOREIGN KEY (TeamGuId) REFERENCES `Team` (GuId)
+		--ON DELETE CASCADE
+		--ON UPDATE RESTRICT,
+		
+	--CONSTRAINT `fk_TeamUser_UserRole`
+		--FOREIGN KEY (UserRoleGuId) REFERENCES `UserRole` (GuId)
+		--ON DELETE CASCADE
+		--ON UPDATE RESTRICT	
+)

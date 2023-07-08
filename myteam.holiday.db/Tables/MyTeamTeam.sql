@@ -1,0 +1,15 @@
+﻿CREATE TABLE [dbo].[MyTeamTeam]
+(
+	GuId BINARY(16) NOT NULL PRIMARY KEY, 
+	TeamName VARCHAR(50) NOT NULL,
+	BaseGuId BINARY(16) NOT NULL,
+	PasswordHash VARCHAR(256) NULL,
+	PasswordSalt VARCHAR(256) NULL,
+	InviteLink VARCHAR(256) NULL,
+	HasPrivate BOOL,
+	OnlyInvite BOOL,
+	--CONSTRAINT `fk_Team_Base`
+		--FOREIGN KEY (BaseGuId) REFERENCES `Base` (GuId)
+		--ON DELETE CASCADE
+		--ON UPDATE RESTRICT
+)

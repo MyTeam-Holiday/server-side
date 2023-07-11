@@ -94,6 +94,10 @@
     <Content Update="appsettings.Local.json" CopyToPublishDirectory="Never" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="appsettings\" />
+  </ItemGroup>
+
   <Target Name="CopyAppSettings" AfterTargets="Build">
     <Copy Condition="'$(AppSettingsFile)' != ''" SourceFiles="$(AppSettingsFile)" DestinationFolder="$(OutputPath)" />
   </Target>

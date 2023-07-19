@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 #application settings
 appsettings.*.json
+
+#tools
+setenv.ps1

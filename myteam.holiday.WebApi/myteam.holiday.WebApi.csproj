@@ -2,24 +2,27 @@
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='DEV|AnyCPU'">
     <TypeScriptTarget>ES6</TypeScriptTarget>
     <Optimise>false</Optimise>
-    <OutputPath>bin/DEV</OutputPath>
+    <OutputPath>bin/DEV/runtime</OutputPath>
     <DefineConstants>$(DefineConstants);DEV</DefineConstants>
+    <EnvironmentName>dev</EnvironmentName>
     <AppSettingsFile>appsettings/appsettings.dev.json</AppSettingsFile>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='UAT|AnyCPU'">
     <TypeScriptTarget>ES6</TypeScriptTarget>
     <Optimise>false</Optimise>
-    <OutputPath>bin/UAT</OutputPath>
+    <OutputPath>bin/UAT/runtime</OutputPath>
     <DefineConstants>$(DefineConstants);UAT</DefineConstants>
+    <EnvironmentName>uat</EnvironmentName>
     <AppSettingsFile>appsettings/appsettings.uat.json</AppSettingsFile>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='PROD|AnyCPU'">
     <TypeScriptTarget>ES6</TypeScriptTarget>
     <Optimise>true</Optimise>
-    <OutputPath>bin/PROD</OutputPath>
+    <OutputPath>bin/PROD/runtime</OutputPath>
     <DefineConstants>$(DefineConstants);PROD</DefineConstants>
+    <EnvironmentName>prod</EnvironmentName>
     <AppSettingsFile>appsettings/appsettings.prod.json</AppSettingsFile>
   </PropertyGroup>
 
@@ -32,7 +35,7 @@
 	<!-- Do not warn about the constructs that did not have comments (when the GenerateDocumentationFile compiler option is ebabled). -->
 	<NoWarn>$(NoWarn);1591</NoWarn>
     <UserSecretsId>01366221-f930-4e7f-a814-2a4be0aa79af</UserSecretsId>
-    <Configurations>Debug;Release;DEV;UAT;PROD;PROD</Configurations>
+    <Configurations>DEV;UAT;PROD</Configurations>
     <PackageIcon>icon.jpg</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
@@ -50,25 +53,30 @@
     <WarningLevel>7</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
   <ItemGroup>
-    <None Include="..\..\..\Media\icon.jpg">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\2Folder4dev.pubxml" />
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\2Folder4prod.pubxml" />
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\2Folder4uat.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Update="appsettings.dev.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="appsettings.uat.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="appsettings.prod.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <!--<NoneInclude="'$(AppSettingsFile)'"/>-->
   </ItemGroup>
+ 
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
@@ -90,16 +98,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
-    <Content Update="appsettings.Local.json" CopyToPublishDirectory="Never" />
+    <Content Update="appsettings\appsettings.dev.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings\appsettings.prod.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings\appsettings.uat.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="appsettings\" />
-  </ItemGroup>
-
-  <Target Name="CopyAppSettings" AfterTargets="Build">
-    <Copy Condition="'$(AppSettingsFile)' != ''" SourceFiles="$(AppSettingsFile)" DestinationFolder="$(OutputPath)" />
+  <Target Name="CopyAndRenameAppSettings" AfterTargets="Build;Publish">
+    <Copy Condition="'$(AppSettingsFile)' != ''" SourceFiles="$(ProjectDir)\$(AppSettingsFile)" DestinationFiles="$(OutputPath)\appsettings.json" />
   </Target>
   
 </Project>

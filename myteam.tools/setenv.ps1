@@ -1,7 +1,6 @@
 # Setting an environment variables
 # Syntax: $env:<variable_name> = "<value>"
 
-$env:mySecureVariable = ''
 $env:server_ip = ''
 $env:db_user_id = ''
 $env:db_password = ''

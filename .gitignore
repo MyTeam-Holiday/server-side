@@ -401,4 +401,4 @@ FodyWeavers.xsd
 appsettings.*.json
 
 #tools
-setenv.ps1
+/myteam.tools/setenv.ps1

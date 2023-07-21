@@ -9,6 +9,11 @@ using System.IO;
 using myteam.holiday.Domain.Services;
 using myteam.holiday.EntityFramework.Data;
 using myteam.holiday.EntityFramework.Services;
+using myteam.holiday.WebApi.EmailService;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.AspNetCore.Identity;
+using myteam.holiday.Domain.Models;
 
 namespace myteam.holiday.WebApi
 {
@@ -36,6 +41,7 @@ namespace myteam.holiday.WebApi
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITeamRepository, TeamRepository>();
             services.AddTransient<IHolidayRepository, HolidayRepository>();
+            services.AddTransient<IEmailSender, EmailSender>();      
 
             // Конфигурация сервисов из appsettings.json
             //var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -58,25 +64,30 @@ namespace myteam.holiday.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyTeam.holiday API", Version = "v1" });
             });
 
+            //добавление дб контекста для ef identity
+            services.AddDbContext<IdentityContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion("8.0.33")));
+            
+            services.AddIdentity<AppUser, IdentityRole>(o =>
+            {
+                //настройки валидации юзера и пароля 
+                o.User.RequireUniqueEmail = true;
+                o.SignIn.RequireConfirmedEmail = true;                
+
+            }).AddDefaultTokenProviders()
+              .AddEntityFrameworkStores<IdentityContext>();
+
+            //настройка опций провайдера токенов
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+            {
+                o.TokenLifespan = TimeSpan.FromHours(1);
+            });
+
             // Другие настройки сервисов
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie("cookie")
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddGoogle(o =>
-                {
-                    o.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    //o.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-                    //o.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-                });
-            services.AddAuthorization(o =>
-            {
-                o.AddPolicy("Roles", policy =>
-                {
-                    policy.RequireRole("Moderator", "Admin")
-                    .RequireAuthenticatedUser();
-                });
-            });
+            services.AddAuthorization();
         }
 
         // Метод, вызываемый для настройки конвейера обработки запросов
@@ -98,16 +109,10 @@ namespace myteam.holiday.WebApi
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseAuthentication();           
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

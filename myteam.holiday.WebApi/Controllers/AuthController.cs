@@ -1,130 +1,137 @@
-﻿using BCrypt.Net;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using myteam.holiday.Domain.Models;
-using myteam.holiday.Domain.Services;
 using myteam.holiday.WebApi.EmailService;
 using myteam.holiday.WebApi.Models;
-using System.Security.Claims;
-using System.Security.Cryptography;
+using System.ComponentModel.DataAnnotations;
 
 namespace myteam.holiday.WebApi.Controllers
 {
     [Route("[controller]")]
-    [ApiController]    
+    [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IEmailSender _emailSender;        
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IEmailSender _emailSender;
 
-        public AuthController(IUserRepository userRepository, IEmailSender emailSender)
+        public AuthController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailSender emailSender)
         {
-            _userRepository = userRepository;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _emailSender = emailSender;
         }
 
         [HttpPost, Route("Registration")]
         public async Task<IActionResult> Registration([FromBody] UserRegDto regModel)
         {
-
-            var user = await _userRepository.GetUserByEmail(regModel.UserEmail!);
-            if (user != null) return BadRequest("User already exists");
-
-            var hashPassword = CreateHash(regModel.Password);
-            var token = CreateRandomToken();
-
-            var userGuId = await _userRepository.CreateUser(new User
+            var user = new AppUser
             {
                 UserName = regModel.UserName,
-                UserEmail = regModel.UserEmail,
-                PasswordHash = hashPassword,
-                //VerifyToken = CreateRandomToken().Split('=')[1],
-                //HasVerified = false
-            });
+                Email = regModel.UserEmail
+            };
 
-            await _emailSender.SendVerifyTokenAsync(token, regModel.UserEmail!);
-            return Ok();
+            var result = await _userManager.CreateAsync(user, regModel.Password);
+
+            if (!result.Succeeded) return BadRequest(result.Errors);
+
+            var role = await _userManager.AddToRoleAsync(user, "Visitor");
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = CreateCallBackUrl(user.Email!, token, nameof(ConfirmEmail));
+            await _emailSender.SendVerifyTokenAsync(callbackUrl!, user.Email!);
+            return Ok("Confirm your email");
+        }
+
+        [HttpGet, Route("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string email, string token)
+        {
+            if (email == null || token == null) return BadRequest("Invalid email confirmation url");
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return NotFound();
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            var status = result.Succeeded ? "Confirmed" : "Not confirmed, try again";
+            return Ok(status);
+        }
+
+        [HttpPost, Route("RequeueConfirmToken")]
+        public async Task<IActionResult> RequeueConfirmToken([Required] string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null) return NotFound("Invalid email");
+            if (user.EmailConfirmed) return Ok("Your email is already confirmed");
+
+            if (user.EmailConfirmationAttempts >= 3)
+            {
+                await _userManager.DeleteAsync(user);
+                return BadRequest("Exceeded the number of attempts");
+            }
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = CreateCallBackUrl($"{user.Email}", token, nameof(ConfirmEmail));
+            await _emailSender.SendVerifyTokenAsync(callbackUrl!, email);
+            user.EmailConfirmationAttempts++;
+            await _userManager.UpdateAsync(user);
+            return Ok("Confirmation token has been sent to your email");
         }
 
         [HttpPost, Route("Login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto loginModel)
         {
-            var user = await _userRepository.GetUserByEmail(loginModel.UserEmail!);
-            if (user == null) return BadRequest("Email or password is invalid");
+            var user = await _userManager.FindByEmailAsync(loginModel.UserEmail);
 
-            if (!IsPasswordVerified(loginModel.Password, user.PasswordHash)) BadRequest("Email or password is invalid"); 
-            //if (!user.HasVerified ) return BadRequest("You should confirm your email"); 
+            if (user == null) return NotFound();
+
+            var result = await _signInManager.PasswordSignInAsync(user, loginModel.Password, loginModel.RememberMe, false);
+            if (!result.Succeeded) return BadRequest("Email or password are wrong");
 
             return Ok();
         }
 
-        [HttpPost, Route("Verify")]
-        public IActionResult Verify([FromQuery]string token)
+        [HttpPost, Route("LogOut")]
+        public async Task<IActionResult> LogOut()
         {
-            //var user = await _userRepository.FindByToken(token);
-            //if (user == null || user.HasVerified) return BadRequest();
-            //if (user.VerifyToken == token)
-            //{user.HasVerified = true; return Ok();}
+            await _signInManager.SignOutAsync();
+            //должен быть редирект к странице логина
             return Ok();
         }
 
-        [ApiExplorerSettings(IgnoreApi = true)]
-        [HttpGet, Route("GoogleOAuth")]
-        public IActionResult GoogleOAuth()
+        [HttpPost, Route("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto model)
         {
-            return Challenge(new AuthenticationProperties
-            { RedirectUri = $"https://{HttpContext.Request.Host}/Auth/GoogleLoginCallBack" },
-                authenticationSchemes: new string[] { GoogleDefaults.AuthenticationScheme });
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null) return BadRequest("Invalid Email");
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = CreateCallBackUrl(user.Email, token, nameof(ResetPass));
+            await _emailSender.SendVerifyTokenAsync(callbackUrl!, model.Email!);
+            return Ok("Password recovery link has been sent to your email");
         }
 
-        [ApiExplorerSettings(IgnoreApi = true)]
-        [HttpGet, Route("GoogleLoginCallBack")]
-        public async Task<IActionResult> GoogleLoginCallBackAsync()
-        {            
-            var response = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            if (response == null || !response.Succeeded) Redirect($"https://{HttpContext.Request.Host}/Auth/GoogleOAuth");
-
-            var cp = response!.Principal!.Clone();
-            var externalClaims = cp.Claims.ToList();
-            var email = externalClaims.First(c => c.Type == ClaimTypes.Email);
-            var userName = externalClaims.First(c => c.Type == ClaimTypes.Name);
-
-            var user = await _userRepository.GetUserByEmail(email.Value);
-            var claims = new List<Claim> 
-            {
-                email,
-                userName
-            };            
-
-            if (user == null) 
-            {
-                //await _userRepository.PreCreateUser(userName.Value, email.Value);
-                claims.Add(new Claim(ClaimTypes.Role, "User"));                
-            }
-            else
-            {
-                //добавить юзеру свойство роли
-                claims.Add(new Claim(ClaimTypes.Role, "Moderator"));
-            }
-
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
-            
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-            return LocalRedirect("/swagger/index.html");
+        [HttpGet, Route("ResetPassword")]
+        public Task<IActionResult> ResetPass([FromQuery] string email, string token)
+        {
+            var model = new ResetPasswordDto { Email = email, Token = token };
+            return Task.FromResult<IActionResult>(Ok(model));
         }
 
-        private string CreateHash(string? password) =>
-            BCrypt.Net.BCrypt.EnhancedHashPassword(password, workFactor: 12);
+        [HttpPost, Route("UpdatePassword")]
+        public async Task<IActionResult> UpdatePass([FromForm] ResetPasswordDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null) return BadRequest("Invalid Email");
 
-        private bool IsPasswordVerified(string? password, string? passwordHash) =>
-            BCrypt.Net.BCrypt.EnhancedVerify(password, passwordHash);
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
 
-        private string CreateRandomToken() =>            
-            $"https://{HttpContext.Request.Host}/Auth/Verify?token={Convert.ToHexString(RandomNumberGenerator.GetBytes(32))}";        
+            var status = result.Succeeded ? "Password has been changed" : "Password has not been changed, try again";
+
+            return Ok(status);
+        }
+
+        private string? CreateCallBackUrl(string email, string token, string action)
+            => Url.Action(action, "Auth", new { email, token }, Request.Scheme, Request.Host.Value);
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.AspNetCore.Identity;
 using myteam.holiday.Domain.Models;
+using myteam.holiday.WebApi.Middlewares;
 
 namespace myteam.holiday.WebApi
 {
@@ -92,10 +93,15 @@ namespace myteam.holiday.WebApi
 
         // Метод, вызываемый для настройки конвейера обработки запросов
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        {  
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                //мидлвер для проверки роли юзера для доступа к сваггеру.
+                //раскоментить, когда будет готова страница для логина  
+                //app.UseSwaggerAccessControl();
+
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
@@ -111,8 +117,9 @@ namespace myteam.holiday.WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthentication();           
+            app.UseAuthentication();
             app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

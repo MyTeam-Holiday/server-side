@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using myteam.holiday.Domain.Models;
 using myteam.holiday.WebApi.EmailService;
 using myteam.holiday.WebApi.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace myteam.holiday.WebApi.Controllers
 {
@@ -123,12 +128,38 @@ namespace myteam.holiday.WebApi.Controllers
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null) return BadRequest("Invalid Email");
-
             var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
-
             var status = result.Succeeded ? "Password has been changed" : "Password has not been changed, try again";
 
             return Ok(status);
+        }
+
+        [HttpGet, Route("GoogleLogin")]
+        public IActionResult GoogleLogin()
+        {
+            var redirectUrl = Url.Action(nameof(GoogleResponse), "Auth");
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(GoogleDefaults.AuthenticationScheme, redirectUrl);
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+        }
+
+        [HttpGet, Route("GoogleResponse")]
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null) return BadRequest();      
+      
+            var externalResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
+            if (externalResult.Succeeded) return Redirect("https://localhost:44376/swagger/index.html");
+
+            var email = info.Principal.FindFirstValue(ClaimValueTypes.Email);
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return BadRequest("You have to register your account");
+
+            var result = await _userManager.AddLoginAsync(user, info);
+            if (!result.Succeeded) return BadRequest("Something going wrong");
+
+            await _signInManager.SignInAsync(user, false);
+            return Redirect("https://localhost:44376/swagger/index.html");
         }
 
         private string? CreateCallBackUrl(string email, string token, string action)

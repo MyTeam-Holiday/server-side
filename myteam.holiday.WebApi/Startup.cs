@@ -68,7 +68,7 @@ namespace myteam.holiday.WebApi
 
             //добавление дб контекста для ef identity
             services.AddDbContext<IdentityContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString(""), new MySqlServerVersion("8.0.33")));
+                options.UseMySql(Configuration.GetConnectionString("DefaultString"), new MySqlServerVersion("8.0.33")));
             
             services.AddIdentity<AppUser, IdentityRole>(o =>
             {

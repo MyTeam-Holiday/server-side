@@ -132,7 +132,7 @@ namespace myteam.holiday.WebApi
                 endpoints.MapControllers();
                 // Другие конечные точки маршрутизации
             });
-            
+           
             //app.MapControllers();
 
             // Место для использования app.Run()

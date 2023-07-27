@@ -27,5 +27,20 @@ namespace myteam.holiday.EntityFramework.Data
 
             return new AppDbContext(options.Options);
         }
+        public AppDbContext CreateSqlServerdbContext(string connectionString)
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>();
+            options.UseSqlServer(connectionString);
+
+            return new AppDbContext(options.Options);
+        }
+        public AppDbContext CreateMariadbContext(string connectionString, Version version)
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>();
+            options.UseMySql(connectionString, new MySqlServerVersion(version));
+
+            return new AppDbContext(options.Options);
+        }
+
     }
 }

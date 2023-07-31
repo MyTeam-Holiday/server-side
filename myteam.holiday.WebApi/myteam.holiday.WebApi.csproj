@@ -112,5 +112,7 @@
   <Target Name="CopyAndRenameAppSettings" AfterTargets="Build;Publish">
     <Copy Condition="'$(AppSettingsFile)' != ''" SourceFiles="$(ProjectDir)\$(AppSettingsFile)" DestinationFiles="$(OutputPath)\appsettings.json" />
   </Target>
-  
+
+    <Import Project="EncryptData.targets" />
+
 </Project>

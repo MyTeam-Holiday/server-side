@@ -1,0 +1,11 @@
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\obj\Debug\DataCrypt&Decryptor.csproj.AssemblyReference.cache
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\obj\Debug\DataCrypt&Decryptor.csproj.SuggestedBindingRedirects.cache
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\obj\Debug\DataCrypt&Decryptor.csproj.CoreCompileInputs.cache
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\bin\Debug\DataCrypt&Decryptor.exe.config
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\bin\Debug\DataCrypt&Decryptor.exe
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\bin\Debug\DataCrypt&Decryptor.pdb
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\bin\Debug\Newtonsoft.Json.dll
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\bin\Debug\Newtonsoft.Json.xml
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\obj\Debug\DataCrypt&Decryptor.csproj.CopyComplete
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\obj\Debug\DataCrypt&Decryptor.exe
+D:\Private\Valerij\Desktop\DataCrypt&Decryptor\obj\Debug\DataCrypt&Decryptor.pdb

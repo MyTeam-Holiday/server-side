@@ -1,0 +1,7 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="EncryptAppSettings" AfterTargets="Build">
+                                                  
+                                                  <!-- Здесь указываем путь  -->
+    <Exec Command="dotnet YourUtility.dll" WorkingDirectory="$(myteam.joliday.WebApi\DataCrypt&Decryptor\DataCrypt&Decryptor\bin\Debug\DataCrypt&Decryptor.exe)" />
+  </Target>
+</Project>

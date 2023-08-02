@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Identity;
 using myteam.holiday.Domain.Models;
 using myteam.holiday.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace myteam.holiday.WebApi
 {
@@ -88,11 +90,23 @@ namespace myteam.holiday.WebApi
             // Другие настройки сервисов
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-                    .AddGoogle(GoogleDefaults.AuthenticationScheme ,o =>
+                    .AddGoogle(GoogleDefaults.AuthenticationScheme, o =>
                     {
                         o.SignInScheme = IdentityConstants.ExternalScheme;
-                        o.ClientId = Configuration["Auth0:ClientId"];
-                        o.ClientSecret = Configuration["Auth0:ClientSecret"];
+                        o.ClientId = "418890583458-gka7tq7kmqrr0o3vemv2vbtlstq8pt89.apps.googleusercontent.com";
+                        o.ClientSecret = "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";
+                    })
+                    .AddOAuth("Vk", options =>
+                    {
+                        options.ClientId = "51720199";
+                        options.ClientSecret = "L4jaPLS00SkVMWqsnLBX";
+                        options.CallbackPath = new PathString("/signin-vk");
+                        options.AuthorizationEndpoint = "https://oauth.vk.com/authorize";
+                        options.TokenEndpoint = "https://oauth.vk.com/access_token";
+                        options.UserInformationEndpoint = "https://api.vk.com/method/users.get?v=5.131";
+                        options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
+                        options.ClaimActions.MapJsonKey(ClaimTypes.Name, "first_name");
+                        options.SaveTokens = true;
                     });
 
             services.AddAuthorization();

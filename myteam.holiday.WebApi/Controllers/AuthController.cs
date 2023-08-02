@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using myteam.holiday.Domain.Models;
@@ -27,6 +28,7 @@ namespace myteam.holiday.WebApi.Controllers
             _emailSender = emailSender;
         }
 
+        [AllowAnonymous]
         [HttpPost, Route("Registration")]
         public async Task<IActionResult> Registration([FromBody] UserRegDto regModel)
         {
@@ -83,6 +85,7 @@ namespace myteam.holiday.WebApi.Controllers
             return Ok("Confirmation token has been sent to your email");
         }
 
+        [AllowAnonymous]
         [HttpPost, Route("Login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto loginModel)
         {
@@ -140,6 +143,34 @@ namespace myteam.holiday.WebApi.Controllers
             var redirectUrl = Url.Action(nameof(GoogleResponse), "Auth");
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(GoogleDefaults.AuthenticationScheme, redirectUrl);
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+        }
+
+        [AllowAnonymous]
+        [HttpGet,Route("VkLogin")]
+        public IActionResult VkLogin(string returnUrl = "https://localhost:7231/swagger/index.html")
+        {
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action("signin-vk"),
+                Items =
+            {
+                { "returnUrl", returnUrl }
+            }
+            };
+
+            return Challenge(properties, "Vk");
+        }
+
+        [HttpGet,Route("signin-vk")]
+        public async Task<IActionResult> VKCallback()
+        {
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var returnUrl = result.Properties.Items["returnUrl"];
+            var user = result.Principal;
+
+
+            return Redirect(returnUrl);
         }
 
         [HttpGet, Route("GoogleResponse")]

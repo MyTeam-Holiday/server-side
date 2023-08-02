@@ -93,8 +93,8 @@ namespace myteam.holiday.WebApi
                     .AddGoogle(GoogleDefaults.AuthenticationScheme, o =>
                     {
                         o.SignInScheme = IdentityConstants.ExternalScheme;
-                        o.ClientId = "418890583458-gka7tq7kmqrr0o3vemv2vbtlstq8pt89.apps.googleusercontent.com";
-                        o.ClientSecret = "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";
+                        o.ClientId = Configuration["Auth0:ClientId"];
+                        o.ClientSecret = Configuration["Auth0:ClientSecret"];
                     })
                     .AddOAuth("Vk", options =>
                     {

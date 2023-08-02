@@ -149,16 +149,17 @@ namespace myteam.holiday.WebApi.Controllers
             if (info == null) return BadRequest();      
       
             var externalResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
-            if (externalResult.Succeeded) return Redirect("https://localhost:44376/swagger/index.html");
+            if (!externalResult.Succeeded)
+            {
+                var email = info.Principal.FindFirstValue(ClaimValueTypes.Email);
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user == null) return BadRequest("You have to register your account");
 
-            var email = info.Principal.FindFirstValue(ClaimValueTypes.Email);
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null) return BadRequest("You have to register your account");
-
-            var result = await _userManager.AddLoginAsync(user, info);
-            if (!result.Succeeded) return BadRequest("Something going wrong");
-
-            await _signInManager.SignInAsync(user, false);
+                var result = await _userManager.AddLoginAsync(user, info);
+                if (!result.Succeeded) return BadRequest("Something going wrong");
+                
+                await _signInManager.SignInAsync(user, false);
+            }            
             return Redirect("https://localhost:44376/swagger/index.html");
         }
 

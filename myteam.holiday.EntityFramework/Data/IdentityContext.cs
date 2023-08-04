@@ -16,9 +16,9 @@ namespace myteam.holiday.EntityFramework.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<AppUser>().ToTable("Users");
-            builder.Entity<IdentityRole>().ToTable("Roles");
-            builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
+            //builder.Entity<AppUser>().ToTable("Users");
+            //builder.Entity<IdentityRole>().ToTable("Roles");
+            //builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
         }
     }
 }

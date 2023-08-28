@@ -1,11 +1,7 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.IO;
+using myteam.holiday.WebApi.Extensions;
 using myteam.holiday.Domain.Services;
 using myteam.holiday.EntityFramework.Data;
 using myteam.holiday.EntityFramework.Services;
@@ -25,10 +21,10 @@ namespace myteam.holiday.WebApi
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            //Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; private set; }
 
         // Метод, вызываемый для конфигурации сервисов приложения
         public void ConfigureServices(IServiceCollection services)
@@ -48,20 +44,19 @@ namespace myteam.holiday.WebApi
             services.AddTransient<IEmailSender, EmailSender>();      
 
             // Конфигурация сервисов из appsettings.json
-            //var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            //var basePath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings");
+            string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            string basePath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings");
 
-            //var appSettingsFile = $"appsettings.{env}.json";
-            //var appSettingsPath = Path.Combine(basePath, appSettingsFile);
+            string appSettingsFile = $"appsettings.{env}.json";
+            string appSettingsPath = Path.Combine(basePath, appSettingsFile);
 
-            //var configurationBuilder = new ConfigurationBuilder()
-            //    .SetBasePath(basePath)
-            //    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            //    .AddJsonFile(appSettingsFile, optional: true, reloadOnChange: true);
+            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(basePath)
+                .AddJsonFile(appSettingsFile, optional: true, reloadOnChange: true);
 
-            //Configuration = configurationBuilder.Build();
+            Configuration = configurationBuilder.Build();
             //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-
+            
             // Добавление Swagger
             services.AddSwaggerGen(c =>
             {
@@ -115,7 +110,7 @@ namespace myteam.holiday.WebApi
         // Метод, вызываемый для настройки конвейера обработки запросов
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {  
-            if (env.IsDevelopment())
+            if (env.IsMyDevelopment())
             {
                 app.UseDeveloperExceptionPage();
 

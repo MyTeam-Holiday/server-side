@@ -7,65 +7,47 @@ using myteam.holiday.EntityFramework.Data;
 using myteam.holiday.EntityFramework.Services;
 using myteam.holiday.WebApi.EmailService;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.AspNetCore.Identity;
 using myteam.holiday.Domain.Models;
-using myteam.holiday.WebApi.Middlewares;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
 
 namespace myteam.holiday.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            //Configuration = configuration;
-        }
+		public IConfiguration Configuration { get; }
 
-        public IConfiguration Configuration { get; private set; }
-
-        // Метод, вызываемый для конфигурации сервисов приложения
-        public void ConfigureServices(IServiceCollection services)
+		public Startup(IConfiguration configuration)
         {
-            // Добавление сервисов, необходимых для приложения
-            services.AddControllers();
+            string? x = configuration["EmailConfig:EmailAddress"];
+		}
+
+		// Метод, вызываемый для конфигурации сервисов приложения
+		public void ConfigureServices(IServiceCollection services)
+        {
+			// Добавление сервисов, необходимых для приложения
+
+			services.AddControllers();
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
             // Add a Swagger generator and Automatic Request and Response annotations:
             //services.AddSwaggerSwashbuckleConfigured();
             services.AddEndpointsApiExplorer();
-            //services.AddSingleton<ModelValidationService>();
-            services.AddSingleton<AppDbContextFactory>();
+			//services.AddSingleton<ModelValidationService>();
+			services.AddSingleton<AppDbContextFactory>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITeamRepository, TeamRepository>();
             services.AddTransient<IHolidayRepository, HolidayRepository>();
-            services.AddTransient<IEmailSender, EmailSender>();      
+			services.AddTransient<IEmailSender, EmailSender>();
 
-            // Конфигурация сервисов из appsettings.json
-            string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            string basePath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings");
-
-            string appSettingsFile = $"appsettings.{env}.json";
-            string appSettingsPath = Path.Combine(basePath, appSettingsFile);
-
-            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(basePath)
-                .AddJsonFile(appSettingsFile, optional: true, reloadOnChange: true);
-
-            Configuration = configurationBuilder.Build();
-            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            
-            // Добавление Swagger
-            services.AddSwaggerGen(c =>
+			// Добавление Swagger
+			services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyTeam.holiday API", Version = "v1" });
             });
 
-            //добавление дб контекста для ef identity
-            services.AddDbContext<IdentityContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DefaultString"), new MySqlServerVersion("8.0.33")));
+			//добавление дб контекста для ef identity
+			services.AddDbContext<IdentityContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion("8.0.33")));
             
             services.AddIdentity<AppUser, IdentityRole>(o =>
             {
@@ -84,14 +66,14 @@ namespace myteam.holiday.WebApi
 
             // Другие настройки сервисов
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-                    .AddGoogle(GoogleDefaults.AuthenticationScheme, o =>
+                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
+					/*.AddGoogle(GoogleDefaults.AuthenticationScheme, o =>
                     {
                         o.SignInScheme = IdentityConstants.ExternalScheme;
                         o.ClientId = Configuration["Auth0:ClientId"];
                         o.ClientSecret = Configuration["Auth0:ClientSecret"];
                     })
-                    .AddOAuth("Vk", options =>
+					.AddOAuth("Vk", options =>
                     {
                         options.ClientId = "51720199";
                         options.ClientSecret = "L4jaPLS00SkVMWqsnLBX";
@@ -102,9 +84,9 @@ namespace myteam.holiday.WebApi
                         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
                         options.ClaimActions.MapJsonKey(ClaimTypes.Name, "first_name");
                         options.SaveTokens = true;
-                    });
+                    });*/
 
-            services.AddAuthorization();
+			services.AddAuthorization();
         }
 
         // Метод, вызываемый для настройки конвейера обработки запросов

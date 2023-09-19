@@ -95,18 +95,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="appsettings\appsettings.dev.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </Content>
-    <Content Update="appsettings\appsettings.prod.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </Content>
-    <Content Update="appsettings\appsettings.uat.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </Content>
+    <Folder Include="appsettings\" />
   </ItemGroup>
 
   <Target Name="CopyAndRenameAppSettings" AfterTargets="Build;Publish">

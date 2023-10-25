@@ -60,47 +60,41 @@
     <Folder Include="StoredProcedures" />
     <Folder Include="StandingData" />
     <Folder Include="Publish" />
-    <Folder Include="StooredFunctions" />
+    <Folder Include="StoredFunctions" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="StoredProcedures\dev.myteam.holiday_AppendUserToTeam.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_CreateHoliday.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_CreateTeam.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_CreateTeamUser.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_DeleteHoliday.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_CreateUser.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_DeleteUser.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_DeleteTeam.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_DeleteUserFromTeam.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_GetHolidayByName.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_GetHolidays.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_GetTeamByName.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_preCreateUser.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_SetRoleToUser.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_UpdateTeam.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_UpdateUser.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_AppendUserToTeam.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_CreateHoliday.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_CreateTeam.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_CreateTeamUser.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_DeleteHoliday.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_CreateUser.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_DeleteUser.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_DeleteTeam.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_DeleteUserFromTeam.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_GetHolidayByName.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_GetHolidays.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_GetTeamByName.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_preCreateUser.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_SetRoleToUser.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_UpdateTeam.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_UpdateUser.sql" />
     <Build Include="Tables\MyTeamUser.sql" />
-    <Build Include="StooredFunctions\UuidToBin.sql" />
     <Build Include="Tables\MyTeamUserRole.sql" />
     <Build Include="Tables\MyTeamBase.sql" />
-    <Build Include="StandingData\AddRoles.sql" />
+    <None Include="StandingData\AddRoles.sql" />
     <Build Include="Tables\MyTeamTeamHoliday.sql" />
     <Build Include="Tables\MyTeamHoliday.sql" />
     <Build Include="Tables\MyTeamTeamUser.sql" />
     <Build Include="Tables\MyTeamTeam.sql" />
-    <Build Include="StooredFunctions\UuidFromBin.sql" />
+    <None Include="StoredFunctions\UuidFromBin.sql" />
+    <None Include="StoredFunctions\UuidToBin.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Publish\myteam.holiday.db.DEV.publish.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Build Include="StoredProcedures\dev.myteam.holiday_GetTeams.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_GetUseByGuId.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_GetUserByEmail.sql" />
-    <Build Include="StoredProcedures\dev.myteam.holiday_GetUsers.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="myteam.holiday.db.refactorlog" />
+    <None Include="StoredProcedures\dev.myteam.holiday_GetTeams.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_GetUseByGuId.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_GetUserByEmail.sql" />
+    <None Include="StoredProcedures\dev.myteam.holiday_GetUsers.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="TeamHolidayDBName">
